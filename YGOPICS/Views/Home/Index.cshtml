@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>@@font-face {
+    font-family: 'Matrix';
+    src: url('Matrix-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+    body{
+            background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/84dc13b7-a2e7-4b45-83ec-311e72e82900/dd6hhft-d09c0a51-dc22-43e0-b4c4-9d426fb7c14a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg0ZGMxM2I3LWEyZTctNGI0NS04M2VjLTMxMWU3MmU4MjkwMFwvZGQ2aGhmdC1kMDljMGE1MS1kYzIyLTQzZTAtYjRjNC05ZDQyNmZiN2MxNGEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.rFUrNSDar1CwY76UDGRqCp1oBOP2Mi5j3lUXggjHz2c");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+    }
+    h1{
+        color:#663399; 
+        text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+             1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+    }
+    p {
+        margin: auto;
+        width:20em;
+        text-align:center;
+        border-radius: 5%;
+        background-color: rgba(252,252,252,0.9);
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4" style="font:5em Matrix">YGOPics</h1>
+    <p style="font:em Matrix">Explore the expansions of Yu-Gi-Oh Trading Card Game, see all the cards and leave your comments about they.</p>
+    <div>
+        <a href="/Pack"><button class="btn btn-primary btn-lg">Packs</button></a>
+        <a href="/Login/Register"><button class="btn btn-primary btn-lg">Register</button></a>
+    </div>
+</div>

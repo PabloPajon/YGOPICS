@@ -1,0 +1,159 @@
+﻿@model Card
+@using System.Text.Json;
+
+
+<div>
+    <h1 id="h1Id"></h1>
+
+    <div>
+        <input type="button" onclick="BackClick()" value="atras">
+        <span id="cardsId"></span>
+        <span id="cardsTotal"></span>
+        <input type="button" onclick="NextClick()" value="Siguiente"/>
+    </div>
+    <div>
+        <h5 id="typeId"></h5>
+        <div>
+            <h5 id="propID"></h5>
+        </div>
+        <div class="span4">
+            <img style="float:right" id="imgId" class="float-right"/>
+            <p class="content-heading" id="pId"></p>
+        </div>
+        
+    </div>
+    
+</div>
+<aside>
+    <h2>Comments:</h2>
+    <div>
+        <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+            <forms>
+            <input type="text" id="commentText" class="form-control mr-3" placeholder="Add comment">
+            <input type="submit" value="Create Commentary" class="btn btn-primary" onclick="CommentCreate()" />
+            </forms>
+        </div>
+        <div id="commentsdiv"></div>
+    </div>
+</aside>
+
+@section Scripts{
+    <script type="text/javascript">
+        console.log("java");
+        var model=@Html.Raw(JsonSerializer.Serialize(Model));
+        var H1= document.getElementById('h1Id');
+        var CARDID= document.getElementById('cardsId');
+        var CARDTOTAL= document.getElementById('cardsTotal');
+        var TYPE= document.getElementById('typeId');
+        var PARRAF= document.getElementById('pId');
+        var PROP= document.getElementById('propID');
+        var IMG = document.getElementById('imgId');
+        let i=0;
+        function SetInfo(){
+            H1.innerHTML=model.data[i].name;
+            CARDID.innerHTML=(i+1);
+            CARDTOTAL.innerHTML="/"+model.data.length;
+            TYPE.innerHTML=model.data[i].type;
+            PARRAF.innerHTML=model.data[i].desc;
+            IMG.src=model.data[i].card_images[0].image_url_small;
+            if(model.data[i].level!=null){
+                PROP.innerHTML= model.data[i].race + " " + model.data[i].level + " " + model.data[i].attribute;
+            }
+            else{
+                PROP.innerHTML = null;
+            }
+        }
+        SetInfo();
+        
+        function CommentUpdate()
+        {
+            console.log("actualizar");
+            var CardGetter = {
+                cardId: model.data[i].id
+            };
+            console.log(CardGetter.cardId);
+            
+            $.ajax({  
+                type: 'POST',  
+                url: "@Url.Action("getComment")", 
+                dataType: "JSON",  
+                contentType: "application/json",
+                data: JSON.stringify(CardGetter),
+                success: function (data) {  
+                    console.log("Recibido"); 
+                     console.log(data);
+                     $("#commentsdiv").empty();
+                     $(data).each(
+                            function() {
+                                $("#commentsdiv").append(
+                                            '<div class="commentname"><div class="commented-section mt-2"><div class="d-flex flex-row align-items-center commented-user"><h5 class="mr-2">'
+                                            + this.userName 
+                                            +'</h5><span class="dot mb-1"></span></div><div class="comment-text-sm">'
+                                            +this.text 
+                                            +'<span></span></div></div>')
+                            });
+                },  
+                error: function (ex) {
+                    console.log("hi");
+                }  
+            });
+        }
+        CommentUpdate();
+        function CommentCreate()
+        {
+            var CommentViewModel = {
+                    UserName: " ",
+                    Cardid : model.data[i].id,
+                    Text : $("#commentText").val()
+                };
+            console.log(CommentViewModel.Text);
+            $.ajax({  
+                type: "POST",  
+                url: "@Url.Action("Comment")",  
+                data: JSON.stringify(CommentViewModel),
+                async: true, 
+                success: function () {  
+                    CommentUpdate();  
+                },  
+                error: function (e) {  
+                    alert("Error while inserting data"); 
+                      
+                },
+                 
+                contentType: "application/json;"
+            }); 
+        }
+        
+        function NextClick(){
+            if(i!=model.data.length)
+            {
+                i++;
+                $("#commentsdiv").empty();
+                SetInfo();
+                CommentUpdate();
+            }
+        }
+        function BackClick(){
+            if(i!=0)
+            {
+                i--;
+                $("#commentsdiv").empty();
+                SetInfo();
+                CommentUpdate();
+            }
+        }
+    </script>
+}
+<style>
+.span4:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.commentname {
+    background: #F4F4F4;
+    border: none;
+    border-radius: 10px
+}
+</style>

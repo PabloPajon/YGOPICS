@@ -1,0 +1,13 @@
+﻿
+@model List<Cardset>
+
+    <h1></h1>
+
+    <h1>Sets</h1>
+    <div class="container">
+        @foreach(var set in Model){
+            <div class="set">
+                @Html.ActionLink(@set.Set_name,"Card", new { name = @set.Set_name })
+            </div>
+        } 
+    </div>
